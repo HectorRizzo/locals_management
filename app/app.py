@@ -43,26 +43,39 @@ local.push(
     }
 )'''
 
-'''#obtener datos
-ref = db.reference('local')
-datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
 
-#Load JSON string into a dictionary
-dic = datos.get()
-#Loop along dictionary keys
-for i in dic:
-    print(i,dic[i])'''
-
-#metodo consulta de datos de un local
-def obtenerDatosLocal(local):
+def getLocal(local):
     ref = db.reference('local')
-    datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
-
-    #Load JSON string into a dictionary
+    datos = ref.child(local)
     dic = datos.get()
-    #Loop along dictionary keys
-    print("Detalles del local",local,":")
-    for key,value in dic[local].items():
-        print('\t',key,':',value)
+    return dic
 
-obtenerDatosLocal('PastelesChino')
+
+def addLocal(dic):
+    ref = db.reference('local')    
+    ref.update(dic)
+ 
+
+def deleteLocal(local):
+    ref = db.reference('local')
+    ref.child(local).set({})
+
+#deleteLocal("PastelesAbuelo")
+#exit()
+
+
+def updateLocal(local,datos_local):
+    deleteLocal(local)
+    addLocal(local,datos_local)
+    
+###Formato de dicionario de locales
+"""dic = {local:{
+        'nombre': local,
+        'apertura': '08:00',
+        'cierre': '16:00',
+        'direccion': 'ESPOL',
+        'tipo': 'restaurante',
+        'capacidad': 60,
+        'propietario': 'hector',
+        'contacto': ['0989816645','0993386084'],
+        }} """
