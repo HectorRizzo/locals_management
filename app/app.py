@@ -65,4 +65,7 @@ def obtenerDatosLocal(local):
     for key,value in dic[local].items():
         print('\t',key,':',value)
 
-obtenerDatosLocal('PastelesChino')
+
+def obtenerDatosUsuario(usuario):
+    ref = db.reference('user')
+    datos = ref.child()
