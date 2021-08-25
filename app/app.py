@@ -43,7 +43,7 @@ local.push(
     }
 )'''
 
-#obtener datos
+'''#obtener datos
 ref = db.reference('local')
 datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
 
@@ -51,5 +51,18 @@ datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
 dic = datos.get()
 #Loop along dictionary keys
 for i in dic:
-    print(i,dic[i])
+    print(i,dic[i])'''
 
+#metodo consulta de datos de un local
+def obtenerDatosLocal(local):
+    ref = db.reference('local')
+    datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
+
+    #Load JSON string into a dictionary
+    dic = datos.get()
+    #Loop along dictionary keys
+    print("Detalles del local",local,":")
+    for key,value in dic[local].items():
+        print('\t',key,':',value)
+
+obtenerDatosLocal('PastelesChino')
