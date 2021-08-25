@@ -85,25 +85,28 @@ def getUsuario(user):
     ref = db.reference('users')
     datos = ref.child(user)
     dic = datos.get()
-    print(dic)
+    return dic
 
 
 def addUsuario(dic):
     ref = db.reference('users')    
     ref.update(dic)
+    return dic
  
 
 def deleteUser(user):
     ref = db.reference('user')
     ref.child(user).set({})
+    return user
+    
 
 #deleteLocal("PastelesAbuelo")
 #exit()
 
 
 def updateUser(user,datos_user):
-    deleteLocal(user)
-    addLocal(user,datos_user)
+    deleteUser(user)
+    newUser = {user:datos_user}
+    return addUsuario(newUser)
+    
 
-
-getUsuario("-MhunkPtiLJBRUWpktK0")
