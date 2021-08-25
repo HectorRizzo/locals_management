@@ -1,4 +1,5 @@
 import firebase_admin
+import json
 from firebase_admin import credentials
 from firebase_admin import db
 
@@ -19,7 +20,7 @@ users.push({
 
 '''local = db.reference('/local')
 local.push(
-    {
+    {'PastelesChino':{
         'nombre': 'PastelesChino',
         'apertura': '08:00',
         'cierre': '16:00',
@@ -28,10 +29,27 @@ local.push(
         'capacidad': 60,
         'propietario': 'hector',
         'contacto': ['0989816645','0993386084'],
+        },
+    'PastelesCelex':{
+    'nombre': 'PastelesCelex',
+    'apertura': '08:00',
+    'cierre': '16:00',
+    'direccion': 'ESPOL',
+    'tipo': 'restaurante',
+    'capacidad': 60,
+    'propietario': 'hector',
+    'contacto': ['0989816645','0993386084'],}
+        
     }
 )'''
 
 #obtener datos
-ref = db.reference('users')
-datos = ref.child('-MhuoF8tSDPhTYQedOAS')
-print(datos.get())
+ref = db.reference('local')
+datos = ref.child('-Mhv0-VwxMdobUmhQ4Ml')
+
+#Load JSON string into a dictionary
+dic = datos.get()
+#Loop along dictionary keys
+for i in dic:
+    print(i,dic[i])
+
