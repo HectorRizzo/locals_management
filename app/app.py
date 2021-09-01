@@ -2,8 +2,12 @@ import firebase_admin
 import json
 from firebase_admin import credentials
 from firebase_admin import db
+from flask import Flask, jsonify, request
+app = Flask(__name__)
+
 
 #cargando certificado del proyecto firebase
+
 firebase_sdk = credentials.Certificate('pruebaslp-19813-firebase-adminsdk-2l6b4-36850be328.json')
 
 #referencia al database en tiempo real de firebase
@@ -43,16 +47,18 @@ local.push(
     }
 )'''
 
-
+@app.route('/getLocal/<string:local>')
 def getLocal(local):
     ref = db.reference('local')
     datos = ref.child(local)
     dic = datos.get()
-    print(dic)
+    return jsonify(dic)
 
-def addLocal(dic):
+@app.route('/addLocal',methods=['POST'])
+def addLocal():
     ref = db.reference('local')    
-    ref.update(dic)
+    ref.update(request.json)
+    
  
 
 def deleteLocal(local):
@@ -81,17 +87,19 @@ def updateLocal(local,datos_local):
 
 
 
+
+@app.route('/getUser/<string:user>')
 def getUsuario(user):
     ref = db.reference('users')
     datos = ref.child(user)
     dic = datos.get()
     return dic
 
-
-def addUsuario(dic):
+@app.route('/addUsuario',methods=['POST'])
+def addUsuario():
     ref = db.reference('users')    
-    ref.update(dic)
-    return dic
+    ref.update(request.json)
+    return request.json
  
 
 def deleteUser(user):
@@ -109,4 +117,7 @@ def updateUser(user,datos_user):
     newUser = {user:datos_user}
     return addUsuario(newUser)
     
+
+if __name__ =='__main__':
+    app.run(debug=True, port=4000)
 
